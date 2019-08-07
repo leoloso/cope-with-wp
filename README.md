@@ -13,11 +13,13 @@ WordPress plugin to implement the COPE ("Create Once, Publish Everywhere") strat
 
 ## Install
 
-Via Composer
+Install the plugin via Composer
 
 ``` bash
 $ composer require leoloso/cope-with-wp
 ```
+
+And then activate the plugin "COPE with WordPress"
 
 ## Usage
 
