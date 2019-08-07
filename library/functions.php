@@ -3,7 +3,7 @@
 /**
  * Process all (Gutenberg) blocks' metadata into a medium-agnostic format from a WordPress post
  */
-function get_block_metadata($block_data) 
+function get_block_metadata($block_data)
 {
   $ret = [];
   foreach ($block_data as $block) {
@@ -16,14 +16,20 @@ function get_block_metadata($block_data)
         break;
 
       case 'core/image':
-        $img = wp_get_attachment_image_src($block['attrs']['id'], $block['attrs']['sizeSlug']);
-        $blockMeta = [
-          'img' => [
-            'src' => $img[0],
-            'width' => $img[1],
-            'height' => $img[2],
-          ]
-        ];
+        $blockMeta = [];
+        // If inserting the image from the Media Manager, it has an ID
+        if ($block['attrs']['id']) {
+          if ($img = wp_get_attachment_image_src($block['attrs']['id'], $block['attrs']['sizeSlug'])) {
+            $blockMeta['img'] = [
+              'src' => $img[0],
+              'width' => $img[1],
+              'height' => $img[2],
+            ];
+          }
+        }
+        elseif ($src = extract_image_src($block['innerHTML'])) {
+          $blockMeta['src'] = $src;
+        }
         if ($caption = extract_caption($block['innerHTML'])) {
           $blockMeta['caption'] = $caption;
         }
@@ -196,12 +202,12 @@ function get_block_metadata($block_data)
   return $ret;
 }
 
-function strip_html_tags($content) 
+function strip_html_tags($content)
 {
   return strip_tags($content, '<strong><em>');
 }
 
-function extract_caption($innerHTML) 
+function extract_caption($innerHTML)
 {
   $matches = [];
   preg_match('/<figcaption>(.*?)<\/figcaption>/', $innerHTML, $matches);
@@ -211,12 +217,22 @@ function extract_caption($innerHTML)
   return null;
 }
 
-function extract_link($innerHTML) 
+function extract_link($innerHTML)
 {
   $matches = [];
   preg_match('/<a href="(.*?)">(.*?)<\/a>/', $innerHTML, $matches);
   if ($link = $matches[1]) {
     return $link;
+  }
+  return null;
+}
+
+function extract_image_src($innerHTML)
+{
+  $matches = [];
+  preg_match('/<img src="(.*?)"/', $innerHTML, $matches);
+  if ($src = $matches[1]) {
+    return $src;
   }
   return null;
 }
