@@ -18,14 +18,12 @@ function get_block_metadata($block_data)
       case 'core/image':
         $blockMeta = [];
         // If inserting the image from the Media Manager, it has an ID
-        if ($block['attrs']['id']) {
-          if ($img = wp_get_attachment_image_src($block['attrs']['id'], $block['attrs']['sizeSlug'])) {
-            $blockMeta['img'] = [
-              'src' => $img[0],
-              'width' => $img[1],
-              'height' => $img[2],
-            ];
-          }
+        if ($block['attrs']['id'] && $img = wp_get_attachment_image_src($block['attrs']['id'], $block['attrs']['sizeSlug'])) {
+          $blockMeta['img'] = [
+            'src' => $img[0],
+            'width' => $img[1],
+            'height' => $img[2],
+          ];
         }
         elseif ($src = extract_image_src($block['innerHTML'])) {
           $blockMeta['src'] = $src;
