@@ -1,11 +1,11 @@
 <?php
 /**
- * Define WPGraphQL field "jsonencoded_blocks"
+ * Define WPGraphQL field "jsonencoded_block_metadata"
  */
 add_action('graphql_register_types', function() {
   register_graphql_field(
     'Post',
-    'jsonencoded_blocks',
+    'jsonencoded_block_metadata',
     [
       'type'        => 'String',
       'description' => __('Post blocks encoded as JSON', 'wp-graphql'),
