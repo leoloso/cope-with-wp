@@ -19,7 +19,7 @@
     ],
     "require": {
         "composer/installers": "^1.6",
-        "leoloso/wp-block-data": "^0.1"
+        "leoloso/wp-block-data": "^0.2"
     },
     "extra": {
         "branch-alias": {
