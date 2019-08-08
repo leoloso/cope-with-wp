@@ -31,7 +31,11 @@ $block_data = get_block_data($post->post_content);
 $block_metadata = get_block_metadata($block_data);
 ```
 
-The data can also be retrieved through the following REST endpoint: `/wp-json/wp/v2/post-block-metadata/{POST_ID}`
+The data can also be retrieved through the following REST endpoint: 
+
+```bash
+/wp-json/wp/v2/post-block-metadata/{POST_ID}
+```
 
 ## Contributing
 
