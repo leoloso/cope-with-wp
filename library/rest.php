@@ -3,13 +3,13 @@
  * Define REST endpoints
  */
 add_action('rest_api_init', function () {
-	// /wp-json/wp/v2/post-block-metadata/{POST_ID}
-  register_rest_route('wp/v2', 'post-block-metadata/(?P<post_id>\d+)', [
+  // Endpoint: /wp-json/block-metadata/v1/metadata/{POST_ID}
+  register_rest_route('block-metadata/v1', 'metadata/(?P<post_id>\d+)', [
     'methods'  => 'GET',
     'callback' => 'get_post_block_meta'
   ]);
 });
-function get_post_block_meta($request) 
+function get_post_block_meta($request)
 {
   $post = get_post($request['post_id']);
   if (!$post) {
